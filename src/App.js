@@ -9,7 +9,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import "./App.css";
 
 const API_KEY = "b87f3df893414e9:b9eeldi6a7ixvcl";
 
@@ -84,32 +83,54 @@ function App() {
     if (loading) return <div className="text-center py-8">Loading data...</div>;
 
     return (
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-lg overflow-hidden">
-          <thead className="bg-blue-600 text-white">
-            <tr>
-              <th className="py-3 px-4 text-left">Indicator</th>
-              <th className="py-3 px-4 text-left">Latest Value</th>
-              <th className="py-3 px-4 text-left">Previous Value</th>
-              <th className="py-3 px-4 text-left">Unit</th>
-              <th className="py-3 px-4 text-left">Frequency</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {countryData.map((item, index) => (
-              <tr
-                key={index}
-                className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-              >
-                <td className="py-3 px-4 font-medium">{item.Category}</td>
-                <td className="py-3 px-4">{item.LatestValue}</td>
-                <td className="py-3 px-4">{item.PreviousValue}</td>
-                <td className="py-3 px-4">{item.Unit}</td>
-                <td className="py-3 px-4">{item.Frequency}</td>
+      <div className="overflow-x-auto -mx-4 sm:mx-0">
+        <div className="inline-block min-w-full align-middle">
+          <table className="min-w-full bg-white rounded-none sm:rounded-lg overflow-hidden">
+            <thead className="bg-blue-600 text-white">
+              <tr>
+                <th className="py-2 px-2 sm:py-3 sm:px-4 text-left text-xs sm:text-sm font-medium">
+                  Indicator
+                </th>
+                <th className="py-2 px-2 sm:py-3 sm:px-4 text-left text-xs sm:text-sm font-medium">
+                  Latest Value
+                </th>
+                <th className="py-2 px-2 sm:py-3 sm:px-4 text-left text-xs sm:text-sm font-medium">
+                  Previous Value
+                </th>
+                <th className="py-2 px-2 sm:py-3 sm:px-4 text-left text-xs sm:text-sm font-medium">
+                  Unit
+                </th>
+                <th className="py-2 px-2 sm:py-3 sm:px-4 text-left text-xs sm:text-sm font-medium">
+                  Frequency
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {countryData.map((item, index) => (
+                <tr
+                  key={index}
+                  className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+                >
+                  <td className="py-2 px-2 sm:py-3 sm:px-4 font-medium text-xs sm:text-sm">
+                    {item.Category}
+                  </td>
+                  <td className="py-2 px-2 sm:py-3 sm:px-4 text-xs sm:text-sm">
+                    {item.LatestValue}
+                  </td>
+                  <td className="py-2 px-2 sm:py-3 sm:px-4 text-xs sm:text-sm">
+                    {item.PreviousValue}
+                  </td>
+                  <td className="py-2 px-2 sm:py-3 sm:px-4 text-xs sm:text-sm">
+                    {item.Unit}
+                  </td>
+                  <td className="py-2 px-2 sm:py-3 sm:px-4 text-xs sm:text-sm">
+                    {item.Frequency}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   };
@@ -127,18 +148,24 @@ function App() {
       .slice(0, 10);
 
     return (
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h3 className="text-xl font-bold mb-4 text-blue-800">
+      <div className="bg-white p-3 sm:p-6 rounded-lg shadow-md">
+        <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-blue-800">
           Historical Data: {selectedCategory} in {selectedCountry}
         </h3>
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="100%" height={300}>
           <LineChart
             data={chartData}
-            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            margin={{ top: 10, right: 10, left: 10, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
+            <XAxis
+              dataKey="date"
+              fontSize={12}
+              angle={-45}
+              textAnchor="end"
+              height={60}
+            />
+            <YAxis fontSize={12} />
             <Tooltip />
             <Legend />
             <Line
@@ -146,6 +173,7 @@ function App() {
               dataKey="value"
               stroke="#8884d8"
               name={selectedCategory}
+              strokeWidth={2}
             />
           </LineChart>
         </ResponsiveContainer>
@@ -156,19 +184,21 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-blue-700 text-white py-6 shadow-md">
+      <header className="bg-blue-700 text-white py-4 sm:py-6 shadow-md">
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">
             Global Economic Indicators Dashboard
           </h1>
-          <p className="mt-2">Compiled Data from Trading Economics</p>
+          <p className="mt-1 sm:mt-2 text-sm sm:text-base">
+            Compiled Data from Trading Economics
+          </p>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-4 sm:py-8">
         {/* Country and Category Selection */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 sm:mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Select Country
@@ -176,7 +206,7 @@ function App() {
               <select
                 value={selectedCountry}
                 onChange={(e) => setSelectedCountry(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 sm:p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               >
                 {countries.map((country) => (
                   <option key={country} value={country}>
@@ -193,7 +223,7 @@ function App() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 sm:p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
               >
                 {categories.map((category) => (
                   <option key={category} value={category}>
@@ -204,33 +234,35 @@ function App() {
             </div>
           </div>
 
-          <div className="mt-6">
-            <h2 className="text-2xl font-bold mb-4 text-blue-800">
+          <div className="mt-4 sm:mt-6">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 text-blue-800">
               Current Data for {selectedCountry}
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="text-sm text-blue-700">GDP</p>
-                <p className="text-xl font-bold">${GDP} Billion</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4">
+              <div className="bg-blue-50 p-3 sm:p-4 rounded-lg">
+                <p className="text-xs sm:text-sm text-blue-700">GDP</p>
+                <p className="text-lg sm:text-xl font-bold">${GDP} Billion</p>
               </div>
-              <div className="bg-green-50 p-4 rounded-lg">
-                <p className="text-sm text-green-700">Inflation</p>
-                <p className="text-xl font-bold">{Inflation}%</p>
+              <div className="bg-green-50 p-3 sm:p-4 rounded-lg">
+                <p className="text-xs sm:text-sm text-green-700">Inflation</p>
+                <p className="text-lg sm:text-xl font-bold">{Inflation}%</p>
               </div>
-              <div className="bg-purple-50 p-4 rounded-lg">
-                <p className="text-sm text-purple-700">Unemployment</p>
-                <p className="text-xl font-bold">{unemployement}%</p>
+              <div className="bg-purple-50 p-3 sm:p-4 rounded-lg sm:col-span-2 lg:col-span-1">
+                <p className="text-xs sm:text-sm text-purple-700">
+                  Unemployment
+                </p>
+                <p className="text-lg sm:text-xl font-bold">{unemployement}%</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Historical Data Chart */}
-        <div className="mb-8">{renderHistoricalChart()}</div>
+        <div className="mb-6 sm:mb-8">{renderHistoricalChart()}</div>
 
         {/* Detailed Indicators Table */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-bold mb-4 text-blue-800">
+        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 text-blue-800">
             Detailed Economic Indicators for {selectedCountry}
           </h2>
           {renderIndicatorsTable()}
@@ -238,16 +270,21 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-6 mt-12">
+      <footer className="bg-gray-800 text-white py-4 sm:py-6 mt-8 sm:mt-12">
         <div className="container mx-auto px-4 text-center">
-          <p>
+          <p className="text-sm sm:text-base">
             Global Economic Indicators Dashboard &copy;{" "}
             {new Date().getFullYear()}
           </p>
 
-          <p className="text-sm text-gray-400 mt-2">
+          <p className="text-xs sm:text-sm text-gray-400 mt-2">
             Designed By Ch Daniyal, visit{" "}
-            <a href="https://www.daniyaldev.me/" target="blank">
+            <a
+              href="https://www.daniyaldev.me/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-400 transition-colors"
+            >
               www.daniyaldev.me
             </a>
           </p>
